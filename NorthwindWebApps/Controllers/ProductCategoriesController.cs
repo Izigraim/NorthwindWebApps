@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Northwind.Services.Products;
-using System.Threading.Tasks;
 
 namespace NorthwindWebApps.Controllers
 {
@@ -25,7 +25,7 @@ namespace NorthwindWebApps.Controllers
             return this.Ok(this.productManagementService.ShowCategories(offset, limit));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{categoryId}")]
         public async Task<ActionResult<ProductCategory>> GetCategory(int categoryId)
         {
             if (this.productManagementService.TryShowCategory(categoryId, out ProductCategory productCategory))
@@ -48,7 +48,7 @@ namespace NorthwindWebApps.Controllers
             else
             {
                 this.productManagementService.CreateCategory(productCategory);
-                return this.CreatedAtAction(nameof(this.GetCategory), new { categoryId = productCategory.Id }, productCategory);
+                return this.Ok(productCategory);
             }
         }
 
