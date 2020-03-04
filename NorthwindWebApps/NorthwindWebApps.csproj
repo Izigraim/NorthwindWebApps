@@ -27,5 +27,9 @@
     <AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Northwind.Services\Northwind.Services.csproj" />
+  </ItemGroup>
+
 
 </Project>
