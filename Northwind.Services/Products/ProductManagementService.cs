@@ -25,20 +25,43 @@ namespace Northwind.Services.Products
         {
             if (productCategory != null)
             {
+                var product = this.context.ProductCategories.Find(productCategory.Id);
+
+                if (product != null)
+                {
+                    productCategory.Id = this.context.ProductCategories.Last().Id + 1;
+                }
+
                 this.context.ProductCategories.Add(productCategory);
                 this.context.SaveChanges();
                 return productCategory.Id;
             }
             else
             {
-                return 0;
+                return -1;
             }
         }
 
         /// <inheritdoc/>
         public int CreateProduct(Product product)
         {
-            throw new NotImplementedException();
+            if (product != null)
+            {
+                var productTemp = this.context.Products.Find(product.Id);
+
+                if (productTemp != null)
+                {
+                    product.Id = this.context.Products.Last().Id + 1;
+                }
+
+                this.context.Products.Add(product);
+                this.context.SaveChanges();
+                return product.Id;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         /// <inheritdoc/>
@@ -67,7 +90,18 @@ namespace Northwind.Services.Products
         /// <inheritdoc/>
         public bool DestroyProduct(int productId)
         {
-            throw new NotImplementedException();
+            var product = this.context.Products.Find(productId);
+
+            if (product != null)
+            {
+                this.context.Products.Remove(product);
+                this.context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>
@@ -91,7 +125,7 @@ namespace Northwind.Services.Products
         /// <inheritdoc/>
         public IList<Product> ShowProducts(int offset, int limit)
         {
-            throw new NotImplementedException();
+            return this.context.Products.Where(c => c.Id >= offset).Take(limit).ToList();
         }
 
         /// <inheritdoc/>
@@ -123,18 +157,24 @@ namespace Northwind.Services.Products
         /// <inheritdoc/>
         public bool TryShowProduct(int productId, out Product product)
         {
-            throw new NotImplementedException();
+            product = this.context.Products.Find(productId);
+
+            if (product != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>
         public bool UpdateCategories(int categoryId, ProductCategory productCategory)
         {
-            var category = this.context.ProductCategories.Single(c => c.Id == categoryId);
-
-            if (category != null)
+            if (productCategory != null)
             {
-                category.Name = productCategory.Name;
-                category.Description = productCategory.Description;
+                this.context.Update(productCategory);
                 this.context.SaveChanges();
                 return true;
             }
@@ -153,7 +193,16 @@ namespace Northwind.Services.Products
         /// <inheritdoc/>
         public bool UpdateProduct(int productId, Product product)
         {
-            throw new NotImplementedException();
+            if (product != null)
+            {
+                this.context.Update(product);
+                this.context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

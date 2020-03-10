@@ -10,6 +10,8 @@ namespace Northwind.Services.Data
     {
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
         public NorthwindContext(DbContextOptions<NorthwindContext> options)
             : base(options)
         {

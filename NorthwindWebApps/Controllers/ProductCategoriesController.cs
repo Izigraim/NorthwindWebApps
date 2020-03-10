@@ -21,13 +21,13 @@ namespace NorthwindWebApps.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductCategory>>> GetCategories(int offset = 0, int limit = 10)
+        public ActionResult<IEnumerable<ProductCategory>> GetCategories(int offset = 0, int limit = 10)
         {
             return this.Ok(this.productManagementService.ShowCategories(offset, limit));
         }
 
         [HttpGet("{categoryId}")]
-        public async Task<ActionResult<ProductCategory>> GetCategory(int categoryId)
+        public ActionResult<ProductCategory> GetCategory(int categoryId)
         {
             if (this.productManagementService.TryShowCategory(categoryId, out ProductCategory productCategory))
             {
@@ -40,7 +40,7 @@ namespace NorthwindWebApps.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductCategory>> CreateCategory(ProductCategory productCategory)
+        public ActionResult<ProductCategory> CreateCategory(ProductCategory productCategory)
         {
             if (productCategory == null)
             {
@@ -54,7 +54,7 @@ namespace NorthwindWebApps.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateCategory(int id, ProductCategory productCategory)
+        public ActionResult UpdateCategory(int id, ProductCategory productCategory)
         {
             if (id != productCategory.Id)
             {
@@ -67,7 +67,7 @@ namespace NorthwindWebApps.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ProductCategory>> DeleteCategory(int id)
+        public ActionResult DeleteCategory(int id)
         {
             if (this.productManagementService.DestroyCategory(id))
             {
