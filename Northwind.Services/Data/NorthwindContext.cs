@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using Northwind.Services.Products;
 
 namespace Northwind.Services.Data
@@ -10,7 +10,8 @@ namespace Northwind.Services.Data
     {
         public DbSet<ProductCategory> ProductCategories { get; set; }
 
-        public NorthwindContext()
+        public NorthwindContext(DbContextOptions<NorthwindContext> options)
+            : base(options)
         {
 
         }

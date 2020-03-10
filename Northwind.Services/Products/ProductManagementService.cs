@@ -13,7 +13,12 @@ namespace Northwind.Services.Products
     /// </summary>
     public sealed class ProductManagementService : IProductManagementService
     {
-        private NorthwindContext context = new NorthwindContext();
+        private NorthwindContext context;
+
+        public ProductManagementService(NorthwindContext context)
+        {
+            this.context = context;
+        }
 
         /// <inheritdoc/>
         public int CreateCategory(ProductCategory productCategory)
