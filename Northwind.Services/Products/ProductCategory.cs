@@ -19,5 +19,10 @@
         /// Gets or sets a product category description.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets a product category picture.
+        /// </summary>
+        public byte[] Picture { get; set; }
     }
 }

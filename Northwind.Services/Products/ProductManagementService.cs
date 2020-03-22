@@ -29,7 +29,7 @@ namespace Northwind.Services.Products
 
                 if (product != null)
                 {
-                    productCategory.Id = this.context.ProductCategories.Last().Id + 1;
+                    productCategory.Id = this.context.ProductCategories.Max(q => q.Id) + 1;
                 }
 
                 this.context.ProductCategories.Add(productCategory);
@@ -51,7 +51,7 @@ namespace Northwind.Services.Products
 
                 if (productTemp != null)
                 {
-                    product.Id = this.context.Products.Last().Id + 1;
+                    product.Id = this.context.Products.Max(q => q.Id) + 1;
                 }
 
                 this.context.Products.Add(product);
@@ -84,7 +84,17 @@ namespace Northwind.Services.Products
         /// <inheritdoc/>
         public bool DestroyPicture(int categoryId)
         {
-            throw new NotImplementedException();
+            var category = this.context.ProductCategories.Find(categoryId);
+
+            if (category == null)
+            {
+                return false;
+            }
+
+            category.Picture = null;
+            this.context.Update(category);
+            this.context.SaveChanges();
+            return true;
         }
 
         /// <inheritdoc/>
@@ -151,7 +161,16 @@ namespace Northwind.Services.Products
         /// <inheritdoc/>
         public bool TryShowPicture(int categoryId, out byte[] bytes)
         {
-            throw new NotImplementedException();
+            var category = this.context.ProductCategories.Find(categoryId);
+
+            if (category.Picture == null)
+            {
+                bytes = null;
+                return false;
+            }
+
+            bytes = category.Picture;
+            return true;
         }
 
         /// <inheritdoc/>
@@ -187,7 +206,24 @@ namespace Northwind.Services.Products
         /// <inheritdoc/>
         public bool UpdatePicture(int categoryId, Stream stream)
         {
-            throw new NotImplementedException();
+            var category = this.context.ProductCategories.Find(categoryId);
+
+            if (category == null)
+            {
+                return false;
+            }
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(memoryStream);
+                category.Picture = memoryStream.ToArray();
+            }
+
+            this.context.Update(category);
+            this.context.SaveChanges();
+
+            return true;
         }
 
         /// <inheritdoc/>
