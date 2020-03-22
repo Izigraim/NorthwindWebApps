@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Northwind.Services.Data;
+using Northwind.Services.EntityFrameworkCore;
 using Northwind.Services.Products;
 
 namespace NorthwindWebApps
@@ -30,9 +31,9 @@ namespace NorthwindWebApps
         {
             services.AddDbContext<NorthwindContext>(opt => opt.UseInMemoryDatabase("NortwindWebDB"));
 
-            services.AddTransient<IProductManagementService, ProductManagementService>();
-            services.AddTransient<IProductCategoryPicturesService, ProductCategoryPicturesService>();
-            services.AddTransient<IProductCategoryManagementService, ProductCategoryManagementService>();
+            services.AddTransient<IProductManagementService, Northwind.Services.EntityFrameworkCore.ProductManagementService>();
+            services.AddTransient<IProductCategoryPicturesService, Northwind.Services.EntityFrameworkCore.ProductCategoryPicturesService>();
+            services.AddTransient<IProductCategoryManagementService, Northwind.Services.EntityFrameworkCore.ProductCategoryManagementService>();
 
             services.AddControllers();
         }

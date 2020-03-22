@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Northwind.Services.Data;
+using Northwind.Services.Products;
 
-namespace Northwind.Services.Products
+namespace Northwind.Services.EntityFrameworkCore
 {
     public class ProductCategoryManagementService : IProductCategoryManagementService
     {

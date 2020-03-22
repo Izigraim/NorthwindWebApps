@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.IO;
 using System.Linq;
+using System.Text;
 using Northwind.Services.Data;
+using Northwind.Services.Products;
 
-namespace Northwind.Services.Products
+namespace Northwind.Services.EntityFrameworkCore
 {
     /// <summary>
     /// Represents a stub for a product management service.

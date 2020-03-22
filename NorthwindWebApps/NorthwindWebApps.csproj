@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Northwind.Services.EntityFrameworkCore\Northwind.Services.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Northwind.Services\Northwind.Services.csproj" />
   </ItemGroup>
 
