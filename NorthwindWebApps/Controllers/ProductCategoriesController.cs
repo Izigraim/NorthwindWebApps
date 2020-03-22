@@ -14,23 +14,25 @@ namespace NorthwindWebApps.Controllers
     [Route("api/[controller]")]
     public class ProductCategoriesController : ControllerBase
     {
-        private readonly IProductManagementService productManagementService;
+        private readonly IProductCategoryPicturesService productCategoryPicturesService;
+        private readonly IProductCategoryManagementService productCategoryManagementService;
 
-        public ProductCategoriesController(IProductManagementService productManagementService)
+        public ProductCategoriesController(IProductCategoryPicturesService productCategoryPicturesService, IProductCategoryManagementService productCategoryManagementService)
         {
-            this.productManagementService = productManagementService;
+            this.productCategoryPicturesService = productCategoryPicturesService;
+            this.productCategoryManagementService = productCategoryManagementService;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ProductCategory>> GetCategories(int offset = 0, int limit = 10)
         {
-            return this.Ok(this.productManagementService.ShowCategories(offset, limit));
+            return this.Ok(this.productCategoryManagementService.ShowCategories(offset, limit));
         }
 
         [HttpGet("{categoryId}")]
         public ActionResult<ProductCategory> GetCategory(int categoryId)
         {
-            if (this.productManagementService.TryShowCategory(categoryId, out ProductCategory productCategory))
+            if (this.productCategoryManagementService.TryShowCategory(categoryId, out ProductCategory productCategory))
             {
                 return this.Ok(productCategory);
             }
@@ -49,7 +51,7 @@ namespace NorthwindWebApps.Controllers
             }
             else
             {
-                this.productManagementService.CreateCategory(productCategory);
+                this.productCategoryManagementService.CreateCategory(productCategory);
                 return this.Ok(productCategory);
             }
         }
@@ -62,7 +64,7 @@ namespace NorthwindWebApps.Controllers
                 return this.BadRequest();
             }
 
-            this.productManagementService.UpdateCategories(id, productCategory);
+            this.productCategoryManagementService.UpdateCategories(id, productCategory);
 
             return this.NoContent();
         }
@@ -70,7 +72,7 @@ namespace NorthwindWebApps.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteCategory(int id)
         {
-            if (this.productManagementService.DestroyCategory(id))
+            if (this.productCategoryManagementService.DestroyCategory(id))
             {
                 return this.NoContent();
             }
@@ -91,7 +93,7 @@ namespace NorthwindWebApps.Controllers
                 {
                     using var stream = new MemoryStream();
                     file.CopyTo(stream);
-                    if (!this.productManagementService.UpdatePicture(id, stream))
+                    if (!this.productCategoryPicturesService.UpdatePicture(id, stream))
                     {
                         return this.NotFound();
                     }
@@ -108,7 +110,7 @@ namespace NorthwindWebApps.Controllers
         [HttpGet("{id}/picture")]
         public ActionResult<byte[]> GetPicture(int id)
         {
-            if (this.productManagementService.TryShowPicture(id, out byte[] bytes))
+            if (this.productCategoryPicturesService.TryShowPicture(id, out byte[] bytes))
             {
                 return this.Ok(bytes);
             }
@@ -119,7 +121,7 @@ namespace NorthwindWebApps.Controllers
         [HttpDelete("{id}/picture")]
         public ActionResult<byte[]> DeletePicture(int id)
         {
-            if (this.productManagementService.DestroyPicture(id))
+            if (this.productCategoryPicturesService.DestroyPicture(id))
             {
                 return this.NoContent();
             }

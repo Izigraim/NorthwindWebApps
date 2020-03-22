@@ -29,7 +29,11 @@ namespace NorthwindWebApps
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NorthwindContext>(opt => opt.UseInMemoryDatabase("NortwindWebDB"));
+
             services.AddTransient<IProductManagementService, ProductManagementService>();
+            services.AddTransient<IProductCategoryPicturesService, ProductCategoryPicturesService>();
+            services.AddTransient<IProductCategoryManagementService, ProductCategoryManagementService>();
+
             services.AddControllers();
         }
 
