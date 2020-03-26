@@ -39,7 +39,7 @@ namespace NorthwindWebApps
 
             services.AddScoped((service) =>
             {
-                var sqlConnection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Nortwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                var sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("NorthwindConnection"));
                 sqlConnection.Open();
                 return sqlConnection;
             });

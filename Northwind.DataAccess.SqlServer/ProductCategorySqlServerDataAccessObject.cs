@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using Northwind.DataAccess.Products;
 
-namespace Northwind.DataAccess.Products
+namespace Northwind.DataAccess.SqlServer
 {
     /// <summary>
     /// Represents a SQL Server-tailored DAO for Northwind product categories.
