@@ -1,4 +1,6 @@
-﻿namespace Northwind.Services.Products
+﻿using Northwind.DataAccess.Products;
+
+namespace Northwind.Services.Products
 {
     /// <summary>
     /// Represents a product category.
@@ -24,5 +26,31 @@
         /// Gets or sets a product category picture.
         /// </summary>
         public byte[] Picture { get; set; }
+
+        public static explicit operator ProductCategory(ProductCategoryTransferObject transferObject)
+        {
+            ProductCategory productCategory = new ProductCategory
+            {
+                Id = transferObject.Id,
+                Name = transferObject.Name,
+                Description = transferObject.Description,
+                Picture = transferObject.Picture,
+            };
+
+            return productCategory;
+        }
+
+        public static explicit operator ProductCategoryTransferObject(ProductCategory productCategory)
+        {
+            ProductCategoryTransferObject transferObject = new ProductCategoryTransferObject
+            {
+                Id = productCategory.Id,
+                Name = productCategory.Name,
+                Description = productCategory.Description,
+                Picture = productCategory.Picture,
+            };
+
+            return transferObject;
+        }
     }
 }

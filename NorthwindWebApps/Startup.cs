@@ -34,8 +34,8 @@ namespace NorthwindWebApps
             services.AddDbContext<NorthwindContext>(opt => opt.UseInMemoryDatabase("NortwindWebDB"));
 
             services.AddTransient<IProductManagementService, Northwind.Services.DataAccess.ProductManagementDataAccessService>();
-            services.AddTransient<IProductCategoryPicturesService, Northwind.Services.EntityFrameworkCore.ProductCategoryPicturesService>();
-            services.AddTransient<IProductCategoryManagementService, Northwind.Services.EntityFrameworkCore.ProductCategoryManagementService>();
+            services.AddTransient<IProductCategoryPicturesService, Northwind.Services.DataAccess.ProductCategoryPicturesManagementDataAccessService>();
+            services.AddTransient<IProductCategoryManagementService, Northwind.Services.DataAccess.ProductCategoriesManagementDataAccessService>();
 
             services.AddScoped((service) =>
             {
