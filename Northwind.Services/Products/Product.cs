@@ -1,4 +1,7 @@
-﻿namespace Northwind.Services.Products
+﻿using System.Collections.Generic;
+using Northwind.DataAccess.Products;
+
+namespace Northwind.Services.Products
 {
     /// <summary>
     /// Represents a product.
@@ -54,5 +57,43 @@
         /// Gets or sets a value indicating whether a product is discontinued.
         /// </summary>
         public bool Discontinued { get; set; }
+
+        public static explicit operator Product(ProductTransferObject transferProduct)
+        {
+            Product product = new Product()
+            {
+                Id = transferProduct.Id,
+                Name = transferProduct.Name,
+                SupplierId = transferProduct.SupplierId,
+                CategoryId = transferProduct.CategoryId,
+                QuantityPerUnit = transferProduct.QuantityPerUnit,
+                UnitPrice = transferProduct.UnitPrice,
+                UnitsInStock = transferProduct.UnitsInStock,
+                UnitsOnOrder = transferProduct.UnitsOnOrder,
+                ReorderLevel = transferProduct.ReorderLevel,
+                Discontinued = transferProduct.Discontinued,
+            };
+
+            return product;
+        }
+
+        public static explicit operator ProductTransferObject(Product product)
+        {
+            ProductTransferObject transferProduct = new ProductTransferObject()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                SupplierId = product.SupplierId,
+                CategoryId = product.CategoryId,
+                QuantityPerUnit = product.QuantityPerUnit,
+                UnitPrice = product.UnitPrice,
+                UnitsInStock = product.UnitsInStock,
+                UnitsOnOrder = product.UnitsOnOrder,
+                ReorderLevel = product.ReorderLevel,
+                Discontinued = product.Discontinued,
+            };
+
+            return transferProduct;
+        }
     }
 }

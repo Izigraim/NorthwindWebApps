@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Northwind.Services.Data;
+using Northwind.Services.DataAccess;
 using Northwind.Services.EntityFrameworkCore;
 using Northwind.Services.Products;
 
@@ -31,9 +33,18 @@ namespace NorthwindWebApps
         {
             services.AddDbContext<NorthwindContext>(opt => opt.UseInMemoryDatabase("NortwindWebDB"));
 
-            services.AddTransient<IProductManagementService, Northwind.Services.EntityFrameworkCore.ProductManagementService>();
+            services.AddTransient<IProductManagementService, Northwind.Services.DataAccess.ProductManagementDataAccessService>();
             services.AddTransient<IProductCategoryPicturesService, Northwind.Services.EntityFrameworkCore.ProductCategoryPicturesService>();
             services.AddTransient<IProductCategoryManagementService, Northwind.Services.EntityFrameworkCore.ProductCategoryManagementService>();
+
+            services.AddScoped((service) =>
+            {
+                var sqlConnection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Nortwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                sqlConnection.Open();
+                return sqlConnection;
+            });
+
+            services.AddTransient<Northwind.DataAccess.NorthwindDataAccessFactory, Northwind.DataAccess.SqlServerDataAccessFactory>();
 
             services.AddControllers();
         }
