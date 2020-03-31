@@ -38,7 +38,7 @@ namespace NorthwindWebApps
             services.AddTransient<IProductCategoryPicturesService, Northwind.Services.DataAccess.ProductCategoryPicturesManagementDataAccessService>();
             services.AddTransient<IProductCategoryManagementService, Northwind.Services.DataAccess.ProductCategoriesManagementDataAccessService>();
 
-            services.AddTransient<IEmployeeManagementService, Northwind.Services.EntityFrameworkCore.EmployeeManagementService>();
+            services.AddTransient<IEmployeeManagementService, Northwind.Services.DataAccess.EmployeeManagementDataAccessService>();
 
             services.AddScoped((service) =>
             {
